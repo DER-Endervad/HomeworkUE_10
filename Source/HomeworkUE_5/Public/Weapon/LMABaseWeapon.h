@@ -60,6 +60,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	FString TraceName = "Tracer";
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon");
+	float Damage = 20;
+
+	void MakeDamage(const FHitResult& HitResult);
+
 	void SpawnTrace(const FVector& TraceStart, const FVector& TraceEnd);
 
 	virtual void BeginPlay() override;

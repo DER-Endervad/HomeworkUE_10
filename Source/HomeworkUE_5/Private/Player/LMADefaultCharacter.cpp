@@ -186,6 +186,7 @@ void ALMADefaultCharacter::SprintStop() {
 // }
 
 void ALMADefaultCharacter::OnDeath() {
+	WeaponComponent->FireStop();
 	CurrentCursor->DestroyRenderState_Concurrent();
 
 	PlayAnimMontage(DeathMontage);

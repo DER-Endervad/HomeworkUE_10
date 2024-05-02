@@ -23,6 +23,8 @@ ALMAHealthPickup::ALMAHealthPickup()
 void ALMAHealthPickup::BeginPlay()
 {
 	Super::BeginPlay();
+	FTimerHandle DeletingTimerHandle;
+	GetWorldTimerManager().SetTimer(DeletingTimerHandle, this, &ALMAHealthPickup::DeletingPickup, DeletingTime);
 }
 
 void ALMAHealthPickup::NotifyActorBeginOverlap(AActor* OtherActor)
@@ -57,13 +59,18 @@ void ALMAHealthPickup::PickupWasTaken()
 	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	GetRootComponent()->SetVisibility(false, true);
 
-	FTimerHandle RespawnTimerHandle;
-	GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ALMAHealthPickup::RespawnPickup, RespawnTime);
+	//FTimerHandle RespawnTimerHandle;
+	//GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ALMAHealthPickup::RespawnPickup, RespawnTime);
 }
 
-void ALMAHealthPickup::RespawnPickup()
-{
-	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
-	GetRootComponent()->SetVisibility(true, true);
+//void ALMAHealthPickup::RespawnPickup()
+//{
+//	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+//	GetRootComponent()->SetVisibility(true, true);
+//}
+
+void ALMAHealthPickup::DeletingPickup() {
+	StaticMesh->DestroyComponent();
+	SphereComponent->DestroyComponent();
 }
 

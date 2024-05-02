@@ -107,10 +107,10 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ALMADefaultCharacter::Sprint);
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ALMADefaultCharacter::SprintStop);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Fire);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ALMADefaultCharacter::Fire);
 	PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &ULMAWeaponComponent::FireStop);
 
-	PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::ThisReload);
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ALMADefaultCharacter::ReloadGun);
 	// PlayerInputComponent->BindAxis("Sprint", this, &ALMADefaultCharacter::Sprint); Старый бег
 	// PlayerInputComponent->BindAction("Shoot", IE_Pressed, BaseWeapon, &ALMABaseWeapon::Fire); было сказанно в вебинаре.
 	// PlayerInputComponent->BindAxis("Fire", WeaponComponent, &ULMAWeaponComponent::Fire);
@@ -147,6 +147,7 @@ void ALMADefaultCharacter::MoveCamera(float Value) {
 void ALMADefaultCharacter::Sprint() {
 	GetCharacterMovement()->MaxWalkSpeed = SpeedSprint;
 	Shift = true;
+	WeaponComponent->FireStop();
 }
 
 void ALMADefaultCharacter::SprintStop() {
@@ -215,5 +216,17 @@ void ALMADefaultCharacter::RotationPlayerOnCursor() {
 		if (CurrentCursor) {
 			CurrentCursor->SetWorldLocation(ResultHit.Location);
 		}
+	}
+}
+
+void ALMADefaultCharacter::ReloadGun() {
+	if (!Shift) {
+		WeaponComponent->ThisReload();
+	}
+}
+
+void ALMADefaultCharacter::Fire() {
+	if (!Shift) {
+		WeaponComponent->Fire();
 	}
 }

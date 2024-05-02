@@ -110,4 +110,6 @@ private:
 	// void OnHealthChanged(float NewHealth);
 
 	void RotationPlayerOnCursor();
+	void ReloadGun();
+	void Fire();
 };

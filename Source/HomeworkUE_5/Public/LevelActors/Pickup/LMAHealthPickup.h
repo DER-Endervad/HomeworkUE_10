@@ -27,6 +27,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
 	float RespawnTime = 5.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
+	float DeletingTime = 10.0f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (ClampMin = "5.0", ClampMax = "100.0"))
 	float HealthFromPickup = 100.0f;
 
@@ -39,5 +42,6 @@ public:
 private:
 	bool GivePickup(ALMADefaultCharacter* Character);
 	void PickupWasTaken();
-	void RespawnPickup();
+	//void RespawnPickup();
+	void DeletingPickup();
 };
